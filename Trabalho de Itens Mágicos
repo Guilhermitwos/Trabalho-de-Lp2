@@ -1,0 +1,380 @@
+using System;
+using System.Collections.Generic;
+
+
+public class Item
+{
+    public string ItemName;
+    public int Id;
+    public int ItemPrice;
+    public string Description;
+}
+
+
+public class Player
+{
+    public string playername;
+    public int xp;
+    public int gold;
+    public List<Item> Itens = new List<Item>();
+}
+
+public class Trabalho2Lp2
+{
+
+
+
+    static List<Player> Players = new List<Player>();
+
+    public static void Main(string[] args)
+    {
+
+
+        bool ShowMenu = true;
+        while (ShowMenu)
+        {
+            ShowMenu = MainMenu();
+        }
+
+    }
+
+
+    private static bool MainMenu()
+    {
+
+            Item Morellonomicon = new Item();
+            Morellonomicon.Id = 1;
+            Morellonomicon.ItemName = "Morellonomicon";
+            Morellonomicon.ItemPrice = 50;
+            Morellonomicon.Description = "(+AP e causa feridas dolorosas)";
+
+            Item CajadoDoVazio = new Item();
+            CajadoDoVazio.Id = 2;
+            CajadoDoVazio.ItemName = "Cajado do Vazio";
+            CajadoDoVazio.ItemPrice = 50;
+            CajadoDoVazio.Description = "(+AP e Penetração de resistência a magias)";
+
+            Item EcoDeLudens = new Item();
+            EcoDeLudens.Id = 3;
+            EcoDeLudens.ItemName = "Eco de Ludens";
+            EcoDeLudens.ItemPrice = 50;
+            EcoDeLudens.Description = "(++AP)";
+
+            Item SemblanteEspiritual = new Item();
+            SemblanteEspiritual.Id = 4;
+            SemblanteEspiritual.ItemName = "Semblante Espiritual";
+            SemblanteEspiritual.ItemPrice = 50;
+            SemblanteEspiritual.Description = "(+Resistência mágica e cura)";
+
+            Item CouraçaDoDefunto = new Item();
+            CouraçaDoDefunto.Id = 5;
+            CouraçaDoDefunto.ItemName = "Couraça do Defunto";
+            CouraçaDoDefunto.ItemPrice = 50;
+            CouraçaDoDefunto.Description = "(+Armadura e velocidade de movimento fora de combate)";
+
+
+        Console.Clear();
+
+        Console.WriteLine("Digite 1 para criar o jogador");
+        Console.WriteLine("Digite 2 para ver informações dos jogadores");
+        Console.WriteLine("Digite 3 para olhar o inventário");
+        Console.WriteLine("Digite 4 para abrir a loja");
+        Console.WriteLine("Digite 5 para fechar o programa");
+        switch (Console.ReadLine())
+        {
+
+                case "1":
+
+                    Console.Clear();
+
+                    Console.Write("Digite seu nome: ");
+                    var PlayerName = Console.ReadLine();
+                    PlayerName = PlayerName.ToLower();
+
+
+                    Console.Write("Digite seu Exp: ");
+                    var PlayerExperience = Console.ReadLine();
+
+                    Random GetEXP = new Random();
+                    var PlayerCoins = GetEXP.Next(50, 350);
+
+
+                    Players.Add(new Player { playername = PlayerName, xp = Convert.ToInt32(PlayerExperience), gold = PlayerCoins });
+                    Console.Clear();
+                    Console.WriteLine("Jogador criado");
+                    Console.WriteLine("Adicionamos R$" + PlayerCoins + " na sua carteira!");
+                    Console.WriteLine("Pressione qualquer tecla");
+                    Console.Read();
+                    return true;
+
+
+
+                case "2":
+                    Console.Clear();
+                    for (int i = 0; i < Players.Count; i++)
+                    {             
+                        Console.WriteLine("Nick: " + Players[i].playername);
+                        Console.WriteLine("Exp: " + Players[i].xp);
+                        Console.WriteLine("Gold: " + Players[i].gold);
+                    
+                    }
+
+                
+                    Console.Write("Pressione qualquer tecla");
+                    Console.ReadKey();
+                    return true;
+
+
+
+                case "3":
+                    Console.Clear();
+                    Console.WriteLine("Digite o nome do jogador para olhar o inventário:");
+                    var PlayerName0 = Console.ReadLine();
+                    PlayerName0 = PlayerName0.ToLower();
+                    foreach (Player p in Players)
+                    {
+                        if (p.playername == PlayerName0)
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine("Itens:");
+                            Console.WriteLine("");
+                            for (int i = 0; i < p.Itens.Count; i++)
+                            {
+                                Console.WriteLine("Item: " + p.Itens[i].ItemName);
+                            }
+                            Console.WriteLine("");
+                            Console.WriteLine("Digite qualquer coisa");
+                            Console.Read();
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Não há nenhum jogador cadastrado");
+                            Console.Read();
+                        }
+                    }
+                    return true;
+
+
+                case "4":
+                    Console.Clear();
+                    Console.WriteLine("Digite o nome do jogador que deve acessar a loja: ");
+                    PlayerName0 = Console.ReadLine();
+                    PlayerName0 = PlayerName0.ToLower();
+                    foreach (Player p in Players)
+                    {
+                        if (p.playername == PlayerName0)
+                        {
+                            Console.WriteLine("Diite o número do item que você deseja comprar");
+                            Console.WriteLine("");
+                            Console.WriteLine(Morellonomicon.Id + " - " + Morellonomicon.ItemName + " " + Morellonomicon.Description);
+                            Console.WriteLine("");
+                            Console.WriteLine(CajadoDoVazio.Id + " - " + CajadoDoVazio.ItemName + " " + CajadoDoVazio.Description);
+                            Console.WriteLine("");
+                            Console.WriteLine(EcoDeLudens.Id + " - " + EcoDeLudens.ItemName + " " + EcoDeLudens.Description);
+                            Console.WriteLine("");
+                            Console.WriteLine(SemblanteEspiritual.Id + " - " + SemblanteEspiritual.ItemName + " " + SemblanteEspiritual.Description);
+                            Console.WriteLine("");
+                            Console.WriteLine(CouraçaDoDefunto.Id + " - " + CouraçaDoDefunto.ItemName + " " + CouraçaDoDefunto.Description);
+                            Console.WriteLine("");
+                            var ic = Console.ReadLine();
+
+
+
+                            if (ic == Morellonomicon.Id.ToString())
+                            {
+
+                                Console.WriteLine("Você gostaria de comprar " + Morellonomicon.ItemName + " por " + Morellonomicon.ItemPrice + "de gold? Digite S ou N");
+                                Console.WriteLine("Seu ouro:" + p.gold);
+                                var resp = Console.ReadLine();
+                                if (resp == "s")
+                                {
+                                    if (p.gold >= Morellonomicon.ItemPrice)
+                                    {
+                                        p.gold = p.gold - Morellonomicon.ItemPrice;
+                                        p.Itens.Add(Morellonomicon);
+                                        Console.Clear();
+                                        Console.WriteLine("Item comprado!");
+                                        Console.WriteLine("Pressione qualquer tecla");
+                                        Console.Read();
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Você não possui dinheiro o suficiente!");
+                                        Console.WriteLine("Pressione qualquer tecla");
+                                        Console.Read();
+                                    }
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Pressione qualquer tecla");
+                                    Console.Read();
+                                }
+                            }
+
+
+                            else if (ic == CajadoDoVazio.Id.ToString())
+                            {
+                                Console.WriteLine("Você gostaria de comprar " + CajadoDoVazio.ItemName + " por " + CajadoDoVazio.ItemPrice + "de gold? Digite S ou N");
+                                Console.WriteLine("Seu ouro:" + p.gold);
+                                var resp = Console.ReadLine();
+                                if (resp == "s")
+                                {
+                                    if (p.gold >= CajadoDoVazio.ItemPrice)
+                                    {
+                                        p.gold = p.gold - CajadoDoVazio.ItemPrice;
+                                        p.Itens.Add(CajadoDoVazio);
+                                        Console.Clear();
+                                        Console.WriteLine("Item comprado!");
+                                        Console.WriteLine("Pressione qualquer tecla");
+                                        Console.Read();
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Você não possui dinheiro o suficiente!");
+                                        Console.WriteLine("Pressione qualquer tecla");
+                                        Console.Read();
+                                    }
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Pressione qualquer tecla");
+                                    Console.Read();
+                                }
+                            }
+
+
+                            else if (ic == EcoDeLudens.Id.ToString())
+                            {
+
+                                Console.WriteLine("Você gostaria de comprar " + EcoDeLudens.ItemName + " por " + EcoDeLudens.ItemPrice + "de gold? Digite S ou N");
+                                Console.WriteLine("Seu ouro:" + p.gold);
+                                var resposta = Console.ReadLine();
+                                resposta = resposta.ToLower();
+                                if (resposta == "s")
+                                {
+                                    if (p.gold >= EcoDeLudens.ItemPrice)
+                                    {
+                                        p.gold = p.gold - EcoDeLudens.ItemPrice;
+                                        p.Itens.Add(EcoDeLudens);
+                                        Console.Clear();
+                                        Console.WriteLine("Item comprado!");
+                                        Console.WriteLine("Pressione qualquer tecla");
+                                        Console.Read();
+                                    }
+
+                                    else
+                                    {
+                                        Console.WriteLine("Você não possui dinheiro o suficiente!");
+                                        Console.WriteLine("Pressione qualquer tecla");
+                                        Console.Read();
+                                    }
+
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Pressione qualquer tecla");
+                                    Console.Read();
+                                }
+                            }
+
+
+                            else if (ic == SemblanteEspiritual.Id.ToString())
+                            {
+                                Console.WriteLine("Você gostaria de comprar " + SemblanteEspiritual.ItemName + " por " + SemblanteEspiritual.ItemPrice + "de gold? Digite S ou N");
+                                Console.WriteLine("Seu ouro:" + p.gold);
+                                var resp = Console.ReadLine();
+                                resp = resp.ToLower();
+                                if (resp == "s")
+                                {
+                                    if (p.gold >= SemblanteEspiritual.ItemPrice)
+                                    {
+                                        p.gold = p.gold - SemblanteEspiritual.ItemPrice;
+                                        p.Itens.Add(SemblanteEspiritual);
+                                        Console.Clear();
+                                        Console.WriteLine("Item comprado!");
+                                        Console.WriteLine("Pressione qualquer tecla");
+                                        Console.Read();
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Você não possui dinheiro o suficiente!");
+                                        Console.WriteLine("Pressione qualquer tecla");
+                                        Console.Read();
+                                    }
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Pressione qualquer tecla");
+                                    Console.Read();
+                                }
+                            }
+
+
+
+                            else if (ic == CouraçaDoDefunto.Id.ToString())
+                            {
+
+                                Console.WriteLine("Você gostaria de comprar " + CouraçaDoDefunto.ItemName + " por " + CouraçaDoDefunto.ItemPrice + "de gold? Digite S ou N");
+                                Console.WriteLine("Seu ouro:" + p.gold);
+                                var resp = Console.ReadLine();
+                                resp = resp.ToLower();
+                                if (resp == "s")
+                                {
+                                    if (p.gold >= CouraçaDoDefunto.ItemPrice)
+                                    {
+                                        p.gold = p.gold - CouraçaDoDefunto.ItemPrice;
+                                        p.Itens.Add(CouraçaDoDefunto);
+                                        Console.Clear();
+                                        Console.WriteLine("Item comprado!");
+                                        Console.WriteLine("Pressione qualquer");
+                                        Console.Read();
+                                    }
+                                    else
+                                    {
+
+                                        Console.WriteLine("Você não possui dinheiro o suficiente!");
+                                        Console.WriteLine("Pressione qualquer tecla");
+                                        Console.Read();
+                                    }
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Pressione qualquer tecla");
+                                    Console.Read();
+                                }
+                            }
+
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Nenhum jogador foi encontrado");
+                                Console.WriteLine("Digite qualquer tecla pra voltar ao Menu");
+                                Console.ReadLine();
+                            }
+
+                        }
+                    }
+                    return true;
+
+
+            
+                case "5":
+                    return false;
+
+
+           
+                default:
+                    return true;
+
+
+        }
+
+    }
+
+}
